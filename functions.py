@@ -1,5 +1,6 @@
 from os import system
 import subprocess
+import re
 from prueba import *
 
 def getSystemInfo():    
@@ -22,6 +23,8 @@ def getSystemInfo():
                 value = lines[i].split(":")[1].strip()
                 data[key] = value
     return data
+
+
 
 def getCpuInfo():
     result = subprocess.run(["wmic", "cpu", "get", "/value"], capture_output=True, text=True)

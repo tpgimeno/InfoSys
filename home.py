@@ -14,9 +14,9 @@ def populateData():
     cpu_cores = cpu_data["NumberOfCores"]
     cpu_threads = cpu_data["NumberOfLogicalProcessors"]
     cpu_width = "  " + cpu_data["DataWidth"] + " Bits"
-    cpu_cache = "  " + cpu_info["Caché"]
+    cpu_cache = "  " + cpu_info["Cach"]
     cpu_bus = "  " + cpu_info["Velocidad del bus"]
-    cpu_maxmemory = "  " + cpu_info["Tamaño de memoria máximo (depende del tipo de memoria)"]
+    cpu_maxmemory = "  " + cpu_info["Tamao de memoria mximo (depende del tipo de memoria)"]
     cpu_memtype = "  " + cpu_info['Tipos de memoria']
     cpu_graphics = "  " + cpu_info['Nombre de GPU']
     cpu_cache_2 = " " + cpu_data["L2CacheSize"] + " Kb"
