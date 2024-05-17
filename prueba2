@@ -1,0 +1,7 @@
+import requests
+from bs4 import BeautifulSoup
+
+website = "https://ark.intel.com/content/www/xl/es/ark/search.html?_charset_=UTF-8&q="
+result = requests.get(website)
+content = result.text
+

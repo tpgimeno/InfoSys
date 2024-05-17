@@ -1,0 +1,97 @@
+
+Nombre de host:                            MERCURIO
+Nombre del sistema operativo:              Microsoft Windows 10 Home
+Versi¢n del sistema operativo:             10.0.19045 N/D Compilaci¢n 19045
+Fabricante del sistema operativo:          Microsoft Corporation
+Configuraci¢n del sistema operativo:       Estaci¢n de trabajo independiente
+Tipo de compilaci¢n del sistema operativo: Multiprocessor Free
+Propiedad de:                              tonyllo@hotmail.com
+Organizaci¢n registrada:                   
+Id. del producto:                          00325-80632-73955-AAOEM
+Fecha de instalaci¢n original:             30/06/2020, 20:57:07
+Tiempo de arranque del sistema:            23/03/2024, 23:03:20
+Fabricante del sistema:                    ASUSTeK COMPUTER INC.
+Modelo el sistema:                         X541UV
+Tipo de sistema:                           x64-based PC
+Procesador(es):                            1 Procesadores instalados.
+                                           [01]: Intel64 Family 6 Model 78 Stepping 3 GenuineIntel ~2304 Mhz
+Versi¢n del BIOS:                          American Megatrends Inc. X541UV.309, 17/04/2019
+Directorio de Windows:                     C:\Windows
+Directorio de sistema:                     C:\Windows\system32
+Dispositivo de arranque:                   \Device\HarddiskVolume1
+Configuraci¢n regional del sistema:        es;Espa¤ol (internacional)
+Idioma de entrada:                         es;Espa¤ol (tradicional)
+Zona horaria:                              (UTC+01:00) Bruselas, Copenhague, Madrid, Par¡s
+Cantidad total de memoria f¡sica:          16.248 MB
+Memoria f¡sica disponible:                 8.732 MB
+Memoria virtual: tama¤o m ximo:            18.680 MB
+Memoria virtual: disponible:               9.619 MB
+Memoria virtual: en uso:                   9.061 MB
+Ubicaci¢n(es) de archivo de paginaci¢n:    C:\pagefile.sys
+Dominio:                                   SUNSYSTEM
+Servidor de inicio de sesi¢n:              \\MERCURIO
+Revisi¢n(es):                              43 revisi¢n(es) instaladas.
+                                           [01]: KB5034466
+                                           [02]: KB5028853
+                                           [03]: KB4537759
+                                           [04]: KB4557968
+                                           [05]: KB4560366
+                                           [06]: KB4561600
+                                           [07]: KB4562830
+                                           [08]: KB4566785
+                                           [09]: KB4570334
+                                           [10]: KB4577266
+                                           [11]: KB4580325
+                                           [12]: KB4586864
+                                           [13]: KB4593175
+                                           [14]: KB4598481
+                                           [15]: KB5003791
+                                           [16]: KB5011048
+                                           [17]: KB5011056
+                                           [18]: KB5012170
+                                           [19]: KB5015684
+                                           [20]: KB5035845
+                                           [21]: KB5006753
+                                           [22]: KB5007273
+                                           [23]: KB5011352
+                                           [24]: KB5011651
+                                           [25]: KB5014032
+                                           [26]: KB5014035
+                                           [27]: KB5014671
+                                           [28]: KB5015895
+                                           [29]: KB5016705
+                                           [30]: KB5018506
+                                           [31]: KB5020372
+                                           [32]: KB5022924
+                                           [33]: KB5023794
+                                           [34]: KB5025315
+                                           [35]: KB5026879
+                                           [36]: KB5028318
+                                           [37]: KB5028380
+                                           [38]: KB5029709
+                                           [39]: KB5031539
+                                           [40]: KB5032392
+                                           [41]: KB5032907
+                                           [42]: KB5036447
+                                           [43]: KB5005699
+Tarjeta(s) de red:                         4 Tarjetas de interfaz de red instaladas.
+                                           [01]: Realtek PCIe FE Family Controller
+                                                 Nombre de conexi¢n: Ethernet
+                                                 Estado:             Medios desconectados
+                                           [02]: Realtek RTL8723BE Wireless LAN 802.11n PCI-E NIC
+                                                 Nombre de conexi¢n: Wi-Fi
+                                                 DHCP habilitado:    S¡
+                                                 Servidor DHCP:      192.168.1.1
+                                                 Direcciones IP
+                                                 [01]: 192.168.1.138
+                                                 [02]: fe80::d419:dc51:6530:3ab3
+                                           [03]: Bluetooth Device (Personal Area Network)
+                                                 Nombre de conexi¢n: Conexi¢n de red Bluetooth
+                                                 Estado:             Medios desconectados
+                                           [04]: VirtualBox Host-Only Ethernet Adapter
+                                                 Nombre de conexi¢n: VirtualBox Host-Only Network
+                                                 DHCP habilitado:    No
+                                                 Direcciones IP
+                                                 [01]: 192.168.77.1
+                                                 [02]: fe80::a1d4:6803:e391:487d
+Requisitos Hyper-V:                        Se detect¢ un hipervisor. No se mostrar n las caracter¡sticas necesarias para Hyper-V.
