@@ -4,7 +4,7 @@
 
 Caption=Placa base
 
-ConfigOptions=
+ConfigOptions={"To Be Filled By O.E.M."}
 
 CreationClassName=Win32_BaseBoard
 
@@ -20,7 +20,7 @@ HotSwappable=FALSE
 
 InstallDate=
 
-Manufacturer=ASUSTeK COMPUTER INC.
+Manufacturer=Gigabyte Technology Co., Ltd.
 
 Model=
 
@@ -32,7 +32,7 @@ PartNumber=
 
 PoweredOn=TRUE
 
-Product=X541UV
+Product=H81M-S2H
 
 Removable=FALSE
 
@@ -42,7 +42,7 @@ RequirementsDescription=
 
 RequiresDaughterBoard=FALSE
 
-SerialNumber=BSN12345678901234567
+SerialNumber=To be filled by O.E.M.
 
 SKU=
 
@@ -54,7 +54,7 @@ Status=OK
 
 Tag=Base Board
 
-Version=1.0       
+Version=x.x
 
 Weight=
 
