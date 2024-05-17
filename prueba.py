@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import *
-import requests
 import time
 path = "C:\Webdriver\chromedriver-win64\chromedriver.exe"
 
@@ -24,15 +23,19 @@ def getCpuIntelData(name):
     search_button = driver.find_element(By.ID, "search-products-submit")
     search_button.click()
     time.sleep(2)
+    cpuList = driver.find_elements(By.CLASS_NAME, "search-result")
+    if(cpuList):
+        itemLinks = driver.find_elements(By.CLASS_NAME, 'result-title a')
+        itemLinks[len(itemLinks)-1].click()
+    time.sleep(1)
     result = driver.find_elements(By.TAG_NAME, "section")
     infolength = len(result)
     data = []  
-    dataList = [] 
-    
+    dataList = []     
     for i in range(4, infolength - 4):        
         section = result[i].text.split("\n")  
         dataList.append(section)
-    print(dataList)
+    
     for item in dataList:
         for h in range(0, len(item)):
             if(len(item[h]) > 0):
@@ -45,9 +48,8 @@ def getCpuIntelData(name):
     
     
     
-    #return dictData
+    return dictData
 
-getCpuIntelData("i3-6100U")
 
 
 
