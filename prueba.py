@@ -3,8 +3,14 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import *
+import re
+
 import time
 path = "C:\Webdriver\chromedriver-win64\chromedriver.exe"
+
+def normalizeString(string):
+    cleanString = re.sub(r'[^a-zA-Z0-9()\s]', '', string)
+    return cleanString
 
 def getCpuIntelData(name):
     intelsite = "https://ark.intel.com/content/www/xl/es/ark/search.html?_charset_=UTF-8&q="
@@ -44,7 +50,8 @@ def getCpuIntelData(name):
 
     dictData = {}
     for i in range(0, len(data) - 1,2):
-        dictData[data[i].strip()] = data[i+1]
+        key = normalizeString(data[i]).strip()
+        dictData[key] = data[i+1]
     
     
     
