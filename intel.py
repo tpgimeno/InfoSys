@@ -16,7 +16,7 @@ def getCpuIntelData(name):
     intelsite = "https://ark.intel.com/content/www/xl/es/ark/search.html?_charset_=UTF-8&q="
     cService = webdriver.ChromeService(executable_path=path)
     options = Options()
-    #options.add_argument("--headless")
+    options.add_argument("--headless")
     driver = webdriver.Chrome(service=cService, options=options)
     driver.get(intelsite)
     time.sleep(5)
@@ -51,11 +51,10 @@ def getCpuIntelData(name):
     dictData = {}
     for i in range(0, len(data) - 1,2):
         key = normalizeString(data[i]).strip()
-        dictData[key] = data[i+1]
-    
-    
+        dictData[key] = data[i+1]   
     
     return dictData
+
 
 
 

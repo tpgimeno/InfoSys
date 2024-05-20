@@ -1,7 +1,8 @@
 from os import system
 import subprocess
 import re
-from prueba import *
+from intel import *
+import bdagent
 
 def getSystemInfo():    
     result = subprocess.run("systeminfo", capture_output=True, text=True)  
@@ -24,8 +25,6 @@ def getSystemInfo():
                 data[key] = value
     return data
 
-
-
 def getCpuInfo():
     result = subprocess.run(["wmic", "cpu", "get", "/value"], capture_output=True, text=True)
     file = open("cpu.txt", "tw")
@@ -43,6 +42,10 @@ def getCpuInfo():
         data[key] = value
     return data
 
+def normalizeString(string):
+    cleanString = re.sub(r'[^a-zA-Z0-9()\s]', '', string)
+    return cleanString
+
 def depurateCpuName(name):
     data = name.split()
     result = []
@@ -58,7 +61,6 @@ def depurateCpuName(name):
         else:
             result.append(item)
     return result
-
 
 
 def getMainBoardInfo():
@@ -83,3 +85,58 @@ def filterManufacturers(manufacturer):
         manufacturer = manufacturer.replace("Genuine", "")        
     return manufacturer
 
+def getMemoryInfo():
+    result = subprocess.run(["wmic", "memorychip", "get", "/value"], capture_output=True, text=True)
+    file = open("cpu.txt", "tw")
+    file.write(result.stdout)
+    file = open("memory.txt", "r")
+    lines = file.readlines()
+    data = {}
+    for line in lines:
+        if line == "":
+            del(line)
+        key = line.split("=")[0]
+        value = ""
+        if len(line.split("=")) > 1:
+            value = line.split("=")[1]
+        data[key] = value
+    return data
+
+def createTableCpuSpecsByMader(mader, cpu_info): 
+    mader = mader.replace("\n", "")   
+    tableName = mader + "Specs"
+    sql = "CREATE TABLE if not exists `" + tableName + "` (id INT AUTO_INCREMENT PRIMARY KEY"
+    for item in cpu_info.keys():
+        item = item.replace("(", " ")
+        item = item.replace(")", " ")
+        item = item.replace(" ", "_")
+        sql = sql + ", " + item + " VARCHAR(255)"
+    sql = sql + ")" 
+
+    bdagent.cursor.execute(sql)
+
+def insertCpuSpecsData(mader, cpu_info):
+    mader = mader.replace("\n", "")
+    mader = mader.replace(" ", "_")
+    mader = normalizeString(mader)
+    tableName = mader.strip() + "Specs"
+    sql = "INSERT INTO `" + tableName + "` ("
+    keys = cpu_info.keys()
+    for item in keys:
+        item = item.replace("(", " ")
+        item = item.replace(")", " ")
+        item = item.replace(" ", "_")
+        sql = sql + "`" + item + "` ,"
+
+    sql = sql.rstrip(sql[-1])
+    sql = sql + ") VALUES (" 
+    for item in keys:
+        sql = sql + "%s,"
+
+    sql = sql.rstrip(sql[-1]) 
+    sql = sql + ")"
+    values = cpu_info.values()
+    
+    
+    
+    bdagent.cursor.execute(sql, values)

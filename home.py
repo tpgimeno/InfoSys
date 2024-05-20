@@ -1,6 +1,8 @@
 from functions import *
 import tkinter as tk
 from tkinter import ttk
+import bdagent
+
 
 def populateData():    
     cpu_data = getCpuInfo()    
@@ -8,7 +10,12 @@ def populateData():
     #Añadiendo las variables de CPU
     cpu_mader = filterManufacturers(cpu_data["Manufacturer"])
     cpu_name = cpu_data["Name"]
-    cpu_info = getCpuIntelData(depurateCpuName(cpu_name))
+    
+    cpu_info = {}
+    if(cpu_mader.strip() == "Intel"):
+        cpu_info = getCpuIntelData(depurateCpuName(cpu_name))
+    createTableCpuSpecsByMader(cpu_mader, cpu_info)
+    insertCpuSpecsData(cpu_mader, cpu_info) 
     cpu_caption = cpu_data["Caption"]
     cpu_clock = "  " + cpu_data["MaxClockSpeed"] + " Mhz"
     cpu_cores = cpu_data["NumberOfCores"]
@@ -76,12 +83,12 @@ def populateData():
 #INICIO DE LA GUI DE LA APP TPINFO
 
 root = tk.Tk()
-root.config(width=1200, height=600)
+root.config(width=1200, height=400)
 root.title("Technic Help")
 #inicializamos la ventana principal
 
 notebook = ttk.Notebook(root)
-notebook.place(x=0, y=0, width=1200, height=600)
+notebook.place(x=0, y=0, width=1200, height=400)
 #Añadimos el contenedor de pestañas
 
 info_frame = tk.Frame(notebook)
@@ -89,7 +96,7 @@ notebook.add(info_frame, text="Info del Sistema")
 #Creamos la primera pestaña
 
 cpu_frame = tk.Frame(info_frame)
-cpu_frame.config(width=395,height=600)
+cpu_frame.config(width=395,height=400)
 cpu_frame["relief"] = "solid"
 cpu_frame["borderwidth"] = "1"
 cpu_frame.pack(side="left")
@@ -147,31 +154,31 @@ cpu_cache_3_label.place(x=180, y=250)
 cpu_cache_3_input = tk.Entry(cpu_frame)
 cpu_cache_3_input.config(font=("Verdana", "9"))
 cpu_cache_3_input.place(x=280, y=250, width=80)
-cpu_busspeed_label = tk.Label(cpu_frame, text="Vel. del Bus: ")
+cpu_busspeed_label = tk.Label(cpu_frame, text="Vel. Bus: ")
 cpu_busspeed_label.place(x=10, y=280)
 cpu_busspeed_input = tk.Entry(cpu_frame)
 cpu_busspeed_input.config(font=("Verdana", "9"))
 cpu_busspeed_input.place(x=80, y=280, width=80)
-cpu_maxmem_label = tk.Label(cpu_frame, text="Max. Memoria: ")
+cpu_maxmem_label = tk.Label(cpu_frame, text="Max. Mem: ")
 cpu_maxmem_label.place(x=180, y=280)
 cpu_maxmem_input = tk.Entry(cpu_frame)
 cpu_maxmem_input.config(font=("Verdana", "9"))
 cpu_maxmem_input.place(x=280, y=280, width=80)
-cpu_memtype_label = tk.Label(cpu_frame, text="Tipos Mem.: ")
+cpu_memtype_label = tk.Label(cpu_frame, text="Tipos Mem: ")
 cpu_memtype_label.place(x=10, y=310)
 cpu_memtype_input = tk.Entry(cpu_frame)
 cpu_memtype_input.config(font=("Verdana", "9"))
 cpu_memtype_input.place(x=80, y=310, width=300)
-cpu_graphics_label = tk.Label(cpu_frame, text="Graficos int.: ")
-cpu_graphics_label.place(x=10, y=310)
+cpu_graphics_label = tk.Label(cpu_frame, text="Graficos: ")
+cpu_graphics_label.place(x=10, y=340)
 cpu_graphics_input = tk.Entry(cpu_frame)
 cpu_graphics_input.config(font=("Verdana", "9"))
-cpu_graphics_input.place(x=80, y=310, width=300)
+cpu_graphics_input.place(x=80, y=340, width=300)
 #Añadimos los elementos de la CPU
 
 
 mainboard_frame = tk.Frame(info_frame)
-mainboard_frame.config(width=395,height=600)
+mainboard_frame.config(width=395,height=400)
 mainboard_frame["relief"] = "solid"
 mainboard_frame["borderwidth"] = "1"
 mainboard_frame.pack(side="left", padx=5)
@@ -196,10 +203,13 @@ mainboard_model_input.place(x=80, y=130, width=300)
 #Creamos el segundo bloque con la info de la Placa Base
 
 memory_frame = tk.Frame(info_frame)
-memory_frame.config(width=395,height=600)
+memory_frame.config(width=395,height=400)
 memory_frame["relief"] = "solid"
 memory_frame["borderwidth"] = "1"
 memory_frame.pack(side="left")
+memory_title = tk.Label(memory_frame, text="Información de la Memoria")
+memory_title.config(anchor="center",font=("Verdana", 16))
+memory_title.place(x=0,y=0, width=390)
 #Creamos el tercer bloque con la info de la Memoria Ram
 
 
