@@ -5,27 +5,42 @@ import bdagent
 
 
 def populateData():    
-    cpu_data = getCpuInfo()    
-    mainboard_data = getMainBoardInfo()
+    cpu_data = getCpuWmicInfo()    
+    mainboard_data = getMainBoardWmicInfo()
     #Añadiendo las variables de CPU
     cpu_mader = filterManufacturers(cpu_data["Manufacturer"])
-    cpu_name = cpu_data["Name"]
-    
+    cpu_name = cpu_data["Name"]    
     cpu_info = {}
-    if(cpu_mader.strip() == "Intel"):
+    if(verifyTableExists("cpu" + cpu_mader.strip().lower() + "specs")):
+        if(verifyCpuDataInDb(depurateCpuName(cpu_name), cpu_mader) == False):            
+            cpu_info = getCpuIntelData(depurateCpuName(cpu_name))
+            createTableCpuSpecsByMader(cpu_mader, cpu_info)
+            insertCpuSpecsData(cpu_mader, cpu_info, depurateCpuName(cpu_name)) 
+            cpu_bus = "  " + cpu_info["Velocidad del bus"]
+            cpu_maxmemory = "  " + cpu_info["Tamao de memoria mximo (depende del tipo de memoria)"]
+            cpu_memtype = "  " + cpu_info['Tipos de memoria']
+            cpu_graphics = "  " + cpu_info['Nombre de GPU']            
+        else:
+            cpu_info = getCpuDbData(depurateCpuName(cpu_name), cpu_mader)
+            cpu_bus = "  " + cpu_info["Velocidad_del_bus"]
+            cpu_maxmemory = "  " + cpu_info["Tamao_de_memoria_mximo__depende_del_tipo_de_memoria_"]
+            cpu_memtype = "  " + cpu_info['Tipos_de_memoria']
+            cpu_graphics = "  " + cpu_info['Nombre_de_GPU'] 
+    else:
         cpu_info = getCpuIntelData(depurateCpuName(cpu_name))
-    createTableCpuSpecsByMader(cpu_mader, cpu_info)
-    insertCpuSpecsData(cpu_mader, cpu_info) 
+        createTableCpuSpecsByMader(cpu_mader, cpu_info)
+        insertCpuSpecsData(cpu_mader, cpu_info, depurateCpuName(cpu_name))
+        cpu_bus = "  " + cpu_info["Velocidad del bus"]
+        cpu_maxmemory = "  " + cpu_info["Tamao de memoria mximo (depende del tipo de memoria)"]
+        cpu_memtype = "  " + cpu_info['Tipos de memoria']
+        cpu_graphics = "  " + cpu_info['Nombre de GPU']
+    
     cpu_caption = cpu_data["Caption"]
     cpu_clock = "  " + cpu_data["MaxClockSpeed"] + " Mhz"
     cpu_cores = cpu_data["NumberOfCores"]
     cpu_threads = cpu_data["NumberOfLogicalProcessors"]
     cpu_width = "  " + cpu_data["DataWidth"] + " Bits"
-    cpu_cache = "  " + cpu_info["Cach"]
-    cpu_bus = "  " + cpu_info["Velocidad del bus"]
-    cpu_maxmemory = "  " + cpu_info["Tamao de memoria mximo (depende del tipo de memoria)"]
-    cpu_memtype = "  " + cpu_info['Tipos de memoria']
-    cpu_graphics = "  " + cpu_info['Nombre de GPU']
+    cpu_cache = "  " + cpu_info["Cach"]    
     cpu_cache_2 = " " + cpu_data["L2CacheSize"] + " Kb"
     cpu_cache_3 = " " + cpu_data["L3CacheSize"] + " Kb"
     cpu_image_label["text"] = "   " + cpu_name  
@@ -68,15 +83,30 @@ def populateData():
     cpu_cache_3_input.config(justify="center")
     cpu_cache_3_input.config(state="readonly") 
     #COMPLETANDO LOS DATOS DE LA PLACA BASE  
-    mainboard_manufacturer = mainboard_data["Manufacturer"] 
+    mainboard_manufacturer = depurateMainBoardManufacturer(mainboard_data["Manufacturer"])
     mainboard_product = mainboard_data["Product"]
-    mainboard_image_label["text"] = "  " + mainboard_manufacturer
-    mainboard_mader_input.insert(tk.END, mainboard_manufacturer)
+    if(verifyTableExists("Mainboard" + mainboard_manufacturer + "Specs")):
+        if(verifyMainboardDataInDb(mainboard_product.strip(), mainboard_manufacturer) == True):
+            mainboard_info = getMainboardDataDb(mainboard_manufacturer, mainboard_product.strip()) 
+        else:
+            mainboard_info = getMainBoardInfo(mainboard_product)  
+            insertMainboardSpecsData(mainboard_manufacturer,mainboard_info, mainboard_product)         
+    else:
+        mainboard_info = getMainBoardInfo(mainboard_product.strip())
+        createMainboardSpecsTable(mainboard_manufacturer, mainboard_info)
+        insertMainboardSpecsData(mainboard_manufacturer, mainboard_info, mainboard_product)
+
+    mainboard_image_label["text"] = "  " + mainboard_data["Manufacturer"]
+    mainboard_mader_input.insert(tk.END, mainboard_data["Manufacturer"])
     mainboard_mader_input.config(justify="center")
     mainboard_mader_input.config(state="readonly")
     mainboard_model_input.insert(tk.END, mainboard_product)
     mainboard_model_input.config(justify="center")
     mainboard_model_input.config(state="readonly")
+    mainboard_slots = " - ".join(mainboard_info["Expansion_Slots__includes_used_"].split("\n"))
+    mainboard_slots_input.insert(tk.END, mainboard_slots)
+    mainboard_slots_input.config(justify="center")
+    mainboard_slots_input.config(state="readonly")
     
 
 
@@ -200,6 +230,11 @@ mainboard_model_label.place(x=10, y=130)
 mainboard_model_input = tk.Entry(mainboard_frame)
 mainboard_model_input.config(font=("Verdana", "9"))
 mainboard_model_input.place(x=80, y=130, width=300)
+mainboard_slots_label = tk.Label(mainboard_frame, text="Expansión: ")
+mainboard_slots_label.place(x=10, y=160)
+mainboard_slots_input = tk.Entry(mainboard_frame)
+mainboard_slots_input.config(font=("Verdana", "9"))
+mainboard_slots_input.place(x=80, y=160, width=300)
 #Creamos el segundo bloque con la info de la Placa Base
 
 memory_frame = tk.Frame(info_frame)

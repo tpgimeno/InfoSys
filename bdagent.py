@@ -1,4 +1,5 @@
 import mysql.connector
+import pymysql
 import time
 
 conexion=mysql.connector.connect(host="localhost", user="root", passwd="")
@@ -8,8 +9,9 @@ conexion.close()
 
 #RECONECTAMOS CON LA BASE DE DATOS SELECCIONADA
 
-conexion=mysql.connector.connect(host="localhost", user="root", passwd="",database="infosys")
+conexion=mysql.connector.connect(host="localhost", user="root", passwd="",database="infosys", consume_results=True)
 cursor=conexion.cursor()
+dictcursor=conexion.cursor(pymysql.cursors.DictCursor)
 
 #CREAMOS LAS TABLAS BASE
 

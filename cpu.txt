@@ -54,7 +54,7 @@ LastErrorCode=
 
 Level=6
 
-LoadPercentage=4
+LoadPercentage=48
 
 Manufacturer=GenuineIntel
 
