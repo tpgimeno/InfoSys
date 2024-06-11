@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 import bdagent
 
+#VARIABLE GLOBAL POSICION Y DINAMICA
+y_index = 0
 
 def populateData():    
     cpu_data = getCpuWmicInfo()    
@@ -103,22 +105,39 @@ def populateData():
     mainboard_model_input.insert(tk.END, mainboard_product)
     mainboard_model_input.config(justify="center")
     mainboard_model_input.config(state="readonly")
-    mainboard_slots = " - ".join(mainboard_info["Expansion_Slots__includes_used_"].split("\n"))
-    mainboard_slots_input.insert(tk.END, mainboard_slots)
-    mainboard_slots_input.config(justify="center")
-    mainboard_slots_input.config(state="readonly")
-    
+    slot_lines = len(mainboard_info["Expansion_Slots__includes_used_"].split("\n"))
+    mainboard_slots_input = {}
+    y_index = 160
+    for i in range(0, slot_lines):        
+        mainboard_slots_input[i] = tk.Entry(mainboard_frame)
+        mainboard_slots_input[i].config(font=("Verdana", "9"))
+        mainboard_slots_input[i].place(x=80, y=y_index, width=300)        
+        mainboard_slots_input[i].insert(tk.END, mainboard_info["Expansion_Slots__includes_used_"].split("\n")[i])    
+        mainboard_slots_input[i].config(state="readonly")
+        y_index = y_index + 30
+    ports_lines = len(mainboard_info["I_O_Ports"].split("\n"))
+    mainboard_ports_input = {}
+    mainboard_ports_label.place(x=10, y=y_index)
+    for i in range(0, ports_lines):
+        mainboard_ports_input[i] = tk.Entry(mainboard_frame)
+        mainboard_ports_input[i].config(font=("Verdana", "9"))
+        mainboard_ports_input[i].place(x=80, y=y_index, width=300) 
+        mainboard_ports_input[i].insert(tk.END, mainboard_info["I_O_Ports"].split("\n")[i])    
+        mainboard_ports_input[i].config(state="readonly")
+        y_index = y_index + 30
 
 
 #INICIO DE LA GUI DE LA APP TPINFO
 
+
+
 root = tk.Tk()
-root.config(width=1200, height=400)
+root.config(width=1200, height=500)
 root.title("Technic Help")
 #inicializamos la ventana principal
 
 notebook = ttk.Notebook(root)
-notebook.place(x=0, y=0, width=1200, height=400)
+notebook.place(x=0, y=0, width=1200, height=500)
 #Añadimos el contenedor de pestañas
 
 info_frame = tk.Frame(notebook)
@@ -126,7 +145,7 @@ notebook.add(info_frame, text="Info del Sistema")
 #Creamos la primera pestaña
 
 cpu_frame = tk.Frame(info_frame)
-cpu_frame.config(width=395,height=400)
+cpu_frame.config(width=395,height=500)
 cpu_frame["relief"] = "solid"
 cpu_frame["borderwidth"] = "1"
 cpu_frame.pack(side="left")
@@ -208,7 +227,7 @@ cpu_graphics_input.place(x=80, y=340, width=300)
 
 
 mainboard_frame = tk.Frame(info_frame)
-mainboard_frame.config(width=395,height=400)
+mainboard_frame.config(width=395,height=500)
 mainboard_frame["relief"] = "solid"
 mainboard_frame["borderwidth"] = "1"
 mainboard_frame.pack(side="left", padx=5)
@@ -232,13 +251,15 @@ mainboard_model_input.config(font=("Verdana", "9"))
 mainboard_model_input.place(x=80, y=130, width=300)
 mainboard_slots_label = tk.Label(mainboard_frame, text="Expansión: ")
 mainboard_slots_label.place(x=10, y=160)
-mainboard_slots_input = tk.Entry(mainboard_frame)
-mainboard_slots_input.config(font=("Verdana", "9"))
-mainboard_slots_input.place(x=80, y=160, width=300)
+
+mainboard_ports_label = ttk.Label(mainboard_frame, text="Puertos: ")
+
+
+
 #Creamos el segundo bloque con la info de la Placa Base
 
 memory_frame = tk.Frame(info_frame)
-memory_frame.config(width=395,height=400)
+memory_frame.config(width=395,height=500)
 memory_frame["relief"] = "solid"
 memory_frame["borderwidth"] = "1"
 memory_frame.pack(side="left")
