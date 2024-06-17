@@ -92,22 +92,26 @@ def filterManufacturers(manufacturer):
         manufacturer = manufacturer.replace("Genuine", "")        
     return manufacturer
 
-def getMemoryInfo():
+def getMemoryWmicInfo():
     result = subprocess.run(["wmic", "memorychip", "get", "/value"], capture_output=True, text=True)
-    file = open("cpu.txt", "tw")
+    file = open("memory.txt", "tw")
     file.write(result.stdout)
     file = open("memory.txt", "r")
     lines = file.readlines()
     data = {}
-    for line in lines:
-        if line == "":
+    for line in lines:        
+        if len(line) < 2 or line=="\n":
             del(line)
+            continue
         key = line.split("=")[0]
         value = ""
+        
         if len(line.split("=")) > 1:
             value = line.split("=")[1]
         data[key] = value
     return data
+
+
 
 def createTableCpuSpecsByMader(mader, cpu_info): 
     mader = mader.replace("\n", "")   

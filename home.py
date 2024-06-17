@@ -9,6 +9,7 @@ y_index = 0
 def populateData():    
     cpu_data = getCpuWmicInfo()    
     mainboard_data = getMainBoardWmicInfo()
+    memory_data = getMemoryWmicInfo()
     #Añadiendo las variables de CPU
     cpu_mader = filterManufacturers(cpu_data["Manufacturer"])
     cpu_name = cpu_data["Name"]    
@@ -128,7 +129,6 @@ def populateData():
 
 
 #INICIO DE LA GUI DE LA APP TPINFO
-
 
 
 root = tk.Tk()
@@ -251,7 +251,6 @@ mainboard_model_input.config(font=("Verdana", "9"))
 mainboard_model_input.place(x=80, y=130, width=300)
 mainboard_slots_label = tk.Label(mainboard_frame, text="Expansión: ")
 mainboard_slots_label.place(x=10, y=160)
-
 mainboard_ports_label = ttk.Label(mainboard_frame, text="Puertos: ")
 
 
